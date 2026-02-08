@@ -14,7 +14,6 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: import.meta.dirname,
       },
     },
     linterOptions: {
@@ -23,7 +22,6 @@ export default defineConfig([
     },
     rules: {
       ...eslintPluginUnicorn.configs.recommended.rules,
-      '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
     },

@@ -1,9 +1,9 @@
-import { Device } from './device.models';
-import { Sensor } from './sensor.mode';
+import { TDevice } from './device.models';
+import { TSensor } from './sensor.mode';
 
-export interface Card {
+export interface TCard {
   id: string;
   title: string;
   layout: 'horizontalLayout' | 'verticalLayout';
-  items: Device | Sensor[];
+  items: (TDevice | TSensor)[];
 }

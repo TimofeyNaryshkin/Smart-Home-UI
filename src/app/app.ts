@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from './sidebar/sidebar';

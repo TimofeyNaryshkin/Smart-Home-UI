@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-header>
+    <h2>{{ data().title }}</h2>
+  </mat-card-header>
+  <mat-card-content>
+    @for (i of data().items; track $index) {
+      @if (i.type === 'device') {
+        <app-device [data]="i" />
+      }
+    }
+  </mat-card-content>
+</mat-card>

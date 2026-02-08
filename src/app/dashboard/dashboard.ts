@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TabSwitcher } from "../tab-switcher/tab-switcher";
+import { TabSwitcher } from '../tab-switcher/tab-switcher';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +7,4 @@ import { TabSwitcher } from "../tab-switcher/tab-switcher";
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
-
-}
+export class Dashboard {}

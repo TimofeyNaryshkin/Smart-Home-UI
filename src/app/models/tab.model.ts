@@ -1,7 +1,7 @@
-import { Card } from './card.model';
+import { TCard } from './card.model';
 
 export interface Tab {
   id: string;
   title: string;
-  cards: Card[];
+  cards: TCard[];
 }
