@@ -15,6 +15,7 @@
     <mat-slide-toggle
       labelPosition="before"
       [checked]="data().state"
+      (change)="toggleDevice()"
       [aria-label]="data().label"
     ></mat-slide-toggle>
   </div>

@@ -1,4 +1,4 @@
-import { Component, input, linkedSignal } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TDevice } from '../models/device.models';
@@ -12,9 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class Device {
   data = input.required<TDevice>();
+  dataChange = output<TDevice>();
   isSingle = input.required<boolean>();
-  isActive = linkedSignal(() => this.data().state)
+  isActive = computed(() => this.data().state);
+
   toggleDevice() {
-    this.isActive.update((val) => !val)
+    this.dataChange.emit({ ...this.data(), state: !this.data().state });
   }
 }

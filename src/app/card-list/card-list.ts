@@ -1,6 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { TCard } from '../models/card.model';
-import { Card } from "../card/card";
+import { Card } from '../card/card';
 
 @Component({
   selector: 'app-card-list',
@@ -9,5 +9,13 @@ import { Card } from "../card/card";
   styleUrl: './card-list.scss',
 })
 export class CardList {
-  cards = input.required<TCard[]>()
+  cards = model.required<TCard[]>();
+
+  updateCard(index: number, updatedCard: TCard) {
+    this.cards.update((cards) => {
+      const updatedCards = [...cards];
+      updatedCards[index] = updatedCard;
+      return updatedCards;
+    });
+  }
 }

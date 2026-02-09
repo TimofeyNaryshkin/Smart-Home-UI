@@ -12,7 +12,11 @@
   <mat-card-content [className]="data().layout">
     @for (i of data().items; track $index) {
       @if (i.type === 'device') {
-        <app-device [data]="i" [isSingle]="data().layout === 'singleDevice'" />
+        <app-device
+          [data]="i"
+          (dataChange)="updateDevice($index, $event)"
+          [isSingle]="data().layout === 'singleDevice'"
+        />
       } @else {
         <app-sensor [data]="i" />
       }
