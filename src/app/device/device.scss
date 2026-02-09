@@ -1,4 +1,20 @@
+@use '@angular/material' as mat;
+
 p {
   display: flex;
   align-items: center;
+}
+
+div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.active {
+  @include mat.icon-overrides(
+    (
+      color: orange,
+    )
+  );
 }

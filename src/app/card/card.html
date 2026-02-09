@@ -5,7 +5,7 @@
   <mat-card-content [className]="data().layout">
     @for (i of data().items; track $index) {
       @if (i.type === 'device') {
-        <app-device [data]="i" />
+        <app-device [data]="i" [isSingle]="data().layout === 'singleDevice'" />
       } @else {
         <app-sensor [data]="i" />
       }

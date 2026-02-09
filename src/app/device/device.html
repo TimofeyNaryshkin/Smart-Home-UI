@@ -1,6 +1,16 @@
-<p>
-  <mat-icon [fontIcon]="data().icon" />
-  <mat-slide-toggle labelPosition="before" [checked]="data().state">
-    {{ data().label }}
-  </mat-slide-toggle>
-</p>
+@if (isSingle()) {
+  <div>
+    <p>{{ data().label }}</p>
+    <button [class.active]="isActive()" (click)="toggleDevice()" matIconButton>
+      <mat-icon [fontIcon]="data().icon" />
+    </button>
+  </div>
+  <h3>{{ isActive() ? 'ON' : 'OFF' }}</h3>
+} @else {
+  <p>
+    <mat-icon [fontIcon]="data().icon" />
+    <mat-slide-toggle labelPosition="before" [checked]="data().state">
+      {{ data().label }}
+    </mat-slide-toggle>
+  </p>
+}

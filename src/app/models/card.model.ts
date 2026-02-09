@@ -4,6 +4,6 @@ import { TSensor } from './sensor.mode';
 export interface TCard {
   id: string;
   title: string;
-  layout: 'horizontalLayout' | 'verticalLayout';
+  layout: 'horizontalLayout' | 'verticalLayout' | 'singleDevice';
   items: (TDevice | TSensor)[];
 }
