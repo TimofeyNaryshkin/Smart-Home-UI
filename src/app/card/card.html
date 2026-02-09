@@ -1,6 +1,13 @@
 <mat-card>
   <mat-card-header>
-    <h2>{{ data().title }}</h2>
+    <mat-card-title>{{ data().title }}</mat-card-title>
+    @if (isDeviceGroup()) {
+      <mat-slide-toggle
+        [checked]="isGroupActive()"
+        (change)="toggleIsGroupActive()"
+        [aria-label]="data().title"
+      ></mat-slide-toggle>
+    }
   </mat-card-header>
   <mat-card-content [className]="data().layout">
     @for (i of data().items; track $index) {

@@ -7,10 +7,15 @@
   </div>
   <h3>{{ isActive() ? 'ON' : 'OFF' }}</h3>
 } @else {
-  <p>
-    <mat-icon [fontIcon]="data().icon" />
-    <mat-slide-toggle labelPosition="before" [checked]="data().state">
-      {{ data().label }}
-    </mat-slide-toggle>
-  </p>
+  <div>
+    <div>
+      <mat-icon [fontIcon]="data().icon" />
+      <p>{{ data().label }}</p>
+    </div>
+    <mat-slide-toggle
+      labelPosition="before"
+      [checked]="data().state"
+      [aria-label]="data().label"
+    ></mat-slide-toggle>
+  </div>
 }
