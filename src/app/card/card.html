@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [appHighlight]="hasActiveDevice()">
   <mat-card-header>
     <mat-card-title>{{ data().title }}</mat-card-title>
     @if (isDeviceGroup()) {

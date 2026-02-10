@@ -5,10 +5,11 @@ import { Device } from '../device/device';
 import { Sensor } from '../sensor/sensor';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TDevice } from '../models/device.models';
+import { Highlight } from '../directives/highlight';
 
 @Component({
   selector: 'app-card',
-  imports: [MatCardModule, Device, Sensor, MatSlideToggleModule],
+  imports: [MatCardModule, Device, Sensor, MatSlideToggleModule, Highlight],
   templateUrl: './card.html',
   styleUrl: './card.scss',
 })
@@ -22,10 +23,14 @@ export class Card {
 
   isGroupActive = computed(() => {
     if (this.isDeviceGroup()) {
-      const devices = this.data().items.filter((item) => item.type === 'device');
-      return devices.some((d) => d.state === true);
+      return this.hasActiveDevice();
     }
     return false;
+  });
+
+  hasActiveDevice = computed(() => {
+    const devices = this.data().items.filter((item) => item.type === 'device');
+    return devices.some((d) => d.state === true);
   });
 
   toggleIsGroupActive() {
