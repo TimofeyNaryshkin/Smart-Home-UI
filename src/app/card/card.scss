@@ -1,0 +1,19 @@
+mat-card-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.verticalLayout {
+  flex-direction: column;
+}
+
+app-device {
+  width: 100%;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
