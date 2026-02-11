@@ -9,7 +9,7 @@ export default defineConfig([
   },
   {
     files: ['**/*.ts'],
-    extends: [tseslint.configs.recommendedTypeChecked, eslintPluginUnicorn.configs.recommended],
+    extends: [tseslint.configs.recommended, eslintPluginUnicorn.configs.recommended],
     languageOptions: {
       globals: globals.browser,
       parserOptions: {
@@ -24,6 +24,7 @@ export default defineConfig([
       ...eslintPluginUnicorn.configs.recommended.rules,
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
+      'unicorn/consistent-function-scoping': 'off',
     },
   },
 ]);
