@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api-service';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class Login {
   private readonly router = inject(Router);
+  private readonly apiService = inject(ApiService);
+  private readonly authService = inject(AuthService);
   private readonly formBuilder = inject(FormBuilder);
 
   loginForm = this.formBuilder.group({
@@ -21,8 +25,12 @@ export class Login {
   });
 
   onSubmit() {
-    const { username, password } = this.loginForm.value;
-    if (username && password) {
+    const { username: userName, password } = this.loginForm.value;
+    if (userName && password) {
+      this.apiService.login({ userName, password }).subscribe((res) => {
+        this.authService.setToken(res.token);
+        this.router.navigate(['/dashboard']);
+      });
     }
   }
 }

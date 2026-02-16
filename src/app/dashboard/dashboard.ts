@@ -1,24 +1,15 @@
 import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterOutlet } from '@angular/router';
-
 import { BreakpointObserver, Breakpoints, LayoutModule } from '@angular/cdk/layout';
 import { map } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Sidebar } from '../sidebar/sidebar';
+import { TabSwitcher } from "../tab-switcher/tab-switcher";
 
 @Component({
   selector: 'app-dashboard',
-  imports: [
-    RouterOutlet,
-    MatSidenavModule,
-    Sidebar,
-    Dashboard,
-    LayoutModule,
-    MatIcon,
-    MatButtonModule,
-  ],
+  imports: [MatSidenavModule, Sidebar, LayoutModule, MatIcon, MatButtonModule, TabSwitcher],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
