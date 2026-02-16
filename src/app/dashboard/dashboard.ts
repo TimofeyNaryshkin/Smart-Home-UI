@@ -5,7 +5,8 @@ import { map } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Sidebar } from '../sidebar/sidebar';
-import { TabSwitcher } from "../tab-switcher/tab-switcher";
+import { TabSwitcher } from '../tab-switcher/tab-switcher';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +15,13 @@ import { TabSwitcher } from "../tab-switcher/tab-switcher";
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
+  authService = inject(AuthService);
   breakpointObserver = inject(BreakpointObserver);
   isLargeScreen = signal(this.breakpointObserver.isMatched(Breakpoints.Large));
   mode = computed(() => (this.isLargeScreen() ? 'side' : 'over'));
-  isOpenned = linkedSignal(() => this.isLargeScreen());
+  isOpenned = linkedSignal(() => {
+    return this.authService.isAuth() && this.isLargeScreen();
+  });
 
   toggleIsOpened() {
     if (this.isOpenned()) {
