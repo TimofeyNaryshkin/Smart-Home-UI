@@ -1,7 +1,16 @@
-<mat-tab-group [(selectedIndex)]="selectedTabIndex">
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
   @for (t of tabs(); track t.id) {
-    <mat-tab [label]="t.title">
-      <app-card-list [(cards)]="t.cards"/>
-    </mat-tab>
+    <a
+      mat-tab-link
+      [routerLink]="[t.id]"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+    >
+      {{ t.title }}
+    </a>
   }
-</mat-tab-group>
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet />
+</mat-tab-nav-panel>

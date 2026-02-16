@@ -1,3 +1,24 @@
-<main>
-  <app-tab-switcher />
-</main>
+<mat-sidenav-container>
+  <mat-sidenav [(opened)]="isOpenned" [mode]="mode()">
+    <button
+      class="sidebar-button inside"
+      (click)="toggleIsOpened()"
+      matIconButton
+      aria-label="sidebar button"
+    >
+      <mat-icon [fontIcon]="isOpenned() ? 'menu_open' : 'dehaze'" />
+    </button>
+    <app-sidebar />
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button
+      class="sidebar-button"
+      (click)="toggleIsOpened()"
+      matIconButton
+      aria-label="sidebar button"
+    >
+      <mat-icon [fontIcon]="isOpenned() ? 'menu_open' : 'dehaze'" />
+    </button>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>
