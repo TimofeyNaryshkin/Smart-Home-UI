@@ -33,7 +33,7 @@ export class TabSwitcher {
         switchMap((dashboardId) =>
           this.store.loadDashboard(dashboardId).pipe(
             tap((tabs) => {
-              if (!this.route.snapshot.firstChild?.params?.['tabId'] && tabs.length) {
+              if (!this.route.snapshot.firstChild?.params?.['tabId'] && tabs.length > 0) {
                 this.router.navigate([tabs[0].id], {
                   relativeTo: this.route,
                   replaceUrl: true,

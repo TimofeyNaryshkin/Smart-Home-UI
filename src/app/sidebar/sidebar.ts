@@ -23,7 +23,7 @@ export class Sidebar {
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
-      filter((e) => e instanceof NavigationEnd),
+      filter((end) => end instanceof NavigationEnd),
       map(() => this.router.url),
       startWith(this.router.url),
     ),

@@ -25,6 +25,7 @@ export default defineConfig([
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       'unicorn/consistent-function-scoping': 'off',
+      'unicorn/no-null': 'off',
     },
   },
 ]);

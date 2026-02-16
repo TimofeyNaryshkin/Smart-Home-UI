@@ -13,7 +13,7 @@ export class DashboardStore {
   loadDashboard(dashboardId: string): Observable<Tab[]> {
     this.tabs.set([]);
     return this.apiService.getDashboard(dashboardId).pipe(
-      map((res) => res.tabs),
+      map((respons) => respons.tabs),
       tap((tabs) => this.tabs.set(tabs)),
     );
   }

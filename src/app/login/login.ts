@@ -27,8 +27,8 @@ export class Login {
   onSubmit() {
     const { username: userName, password } = this.loginForm.value;
     if (userName && password) {
-      this.apiService.login({ userName, password }).subscribe((res) => {
-        this.authService.setToken(res.token);
+      this.apiService.login({ userName, password }).subscribe((response) => {
+        this.authService.setToken(response.token);
         this.router.navigate(['/dashboard']);
       });
     }
