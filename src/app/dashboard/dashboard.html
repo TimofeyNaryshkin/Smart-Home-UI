@@ -1,14 +1,16 @@
 <mat-sidenav-container>
   <mat-sidenav [(opened)]="isOpenned" [mode]="mode()">
-    <button
-      class="sidebar-button inside"
-      (click)="toggleIsOpened()"
-      matIconButton
-      aria-label="sidebar button"
-    >
-      <mat-icon [fontIcon]="isOpenned() ? 'menu_open' : 'dehaze'" />
-    </button>
-    <app-sidebar />
+    @if (isAuth) {
+      <button
+        class="sidebar-button inside"
+        (click)="toggleIsOpened()"
+        matIconButton
+        aria-label="sidebar button"
+      >
+        <mat-icon [fontIcon]="isOpenned() ? 'menu_open' : 'dehaze'" />
+      </button>
+      <app-sidebar />
+    }
   </mat-sidenav>
   <mat-sidenav-content>
     <button

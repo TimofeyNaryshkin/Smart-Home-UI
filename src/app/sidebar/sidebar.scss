@@ -1,4 +1,4 @@
-nav {
+mat-nav-list {
   display: flex;
   flex-direction: column;
   flex-grow: 20;
@@ -15,9 +15,6 @@ div {
 }
 
 a {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
   text-decoration: none;
   color: inherit;
   &:visited {
@@ -28,4 +25,17 @@ a {
 h1 {
   margin: 14px 0;
   padding-left: 1rem;
+}
+
+.initials {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  background-color: grey;
+  color: white;
 }
