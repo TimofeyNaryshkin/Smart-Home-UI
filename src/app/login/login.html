@@ -1,0 +1,31 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title style="margin-bottom: 16px">Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="login-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="test@example.com" formControlName="username" />
+        @if (loginForm.get('username')?.hasError('required')) {
+          <mat-error>Email is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="login-full-width">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+        @if (loginForm.get('password')?.hasError('required')) {
+          <mat-error>Password is required</mat-error>
+        }
+      </mat-form-field>
+      <mat-card-actions>
+        <button matButton type="submit" [disabled]="loginForm.invalid">Sign In</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

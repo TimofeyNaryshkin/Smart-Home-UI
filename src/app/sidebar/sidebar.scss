@@ -1,0 +1,41 @@
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 20;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+div {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  &:visited {
+    color: inherit;
+  }
+}
+
+h1 {
+  margin: 14px 0;
+  padding-left: 1rem;
+}
+
+.initials {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  background-color: grey;
+  color: white;
+}
