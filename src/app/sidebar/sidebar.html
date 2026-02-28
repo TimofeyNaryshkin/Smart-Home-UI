@@ -3,7 +3,9 @@
 <mat-nav-list>
   @if (list()?.length) {
     @for (link of list(); track link) {
-      <mat-list-item [routerLink]="currentDashboardId() === link.id ? null : ['/dashboard', link.id]">
+      <mat-list-item
+        [routerLink]="currentDashboardId() === link.id ? null : ['/dashboard', link.id]"
+      >
         <mat-icon matListItemIcon fontIcon="{{ link.icon }}" />
         <h3 matListItemTitle>{{ link.title }}</h3>
       </mat-list-item>
@@ -13,8 +15,14 @@
   }
 </mat-nav-list>
 <mat-divider></mat-divider>
-<div>
-  <p class="initials">{{ user()?.initials }}</p>
-  {{ user()?.fullName }}
-  <button matIconButton><mat-icon fontIcon="logout" /></button>
+<div class="flex-column">
+  <button (click)="openDashboardForm()" matButton class="add-dashboard-button">
+    <mat-icon fontIcon="add" />
+    Add Dashboard
+  </button>
+  <div>
+    <p class="initials">{{ user()?.initials }}</p>
+    {{ user()?.fullName }}
+    <button matIconButton><mat-icon fontIcon="logout" /></button>
+  </div>
 </div>

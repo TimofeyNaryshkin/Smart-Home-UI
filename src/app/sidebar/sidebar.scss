@@ -11,7 +11,6 @@ div {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
 }
 
 a {
@@ -38,4 +37,10 @@ h1 {
   font-weight: bold;
   background-color: grey;
   color: white;
+}
+
+.flex-column {
+  align-items: start;
+  padding: 1rem;
+  flex-direction: column;
 }

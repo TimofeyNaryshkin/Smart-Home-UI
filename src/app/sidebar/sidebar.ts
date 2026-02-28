@@ -7,16 +7,25 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, startWith } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDashboardForm } from '../add-dashboard-form/add-dashboard-form';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, MatIconModule, MatDividerModule, MatButtonModule, MatListModule],
+  imports: [
+    RouterLink,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatListModule,
+  ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
 export class Sidebar {
   private readonly router = inject(Router);
   private readonly apiService = inject(ApiService);
+  private readonly dialog = inject(MatDialog);
 
   readonly user = toSignal(this.apiService.getProfile());
   readonly list = toSignal(this.apiService.getDashboards());
@@ -32,4 +41,8 @@ export class Sidebar {
   readonly currentDashboardId = computed(
     () => this.currentUrl()?.match(/\/dashboard\/([^/?]+)/)?.[1],
   );
+
+  openDashboardForm() {
+    this.dialog.open(AddDashboardForm);
+  }
 }

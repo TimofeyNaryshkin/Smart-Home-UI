@@ -27,4 +27,8 @@ export class ApiService {
   getDashboard(dashboardId: string): Observable<{ tabs: Tab[] }> {
     return this.http.get<{ tabs: Tab[] }>(`/dashboards/${dashboardId}`);
   }
+
+  createDashboard(data: TDashboard): Observable<TDashboard> {
+    return this.http.post<TDashboard>(`/dashboards`, data);
+  }
 }

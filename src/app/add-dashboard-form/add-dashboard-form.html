@@ -1,0 +1,24 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title style="margin-bottom: 16px">Add Dashboard</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="add-dashboard-form" [formGroup]="addDashboardForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="dashboard-full-width">
+        <mat-label>Id</mat-label>
+        <input matInput type="text" placeholder="some id" formControlName="id" />
+      </mat-form-field>
+      <mat-form-field class="dashboard-full-width">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" placeholder="some title" formControlName="title" />
+      </mat-form-field>
+      <mat-form-field class="dashboard-full-width">
+        <mat-label>Icon</mat-label>
+        <input matInput type="text" placeholder="some icon" formControlName="icon" />
+      </mat-form-field>
+      <mat-card-actions>
+        <button matButton type="submit" [disabled]="addDashboardForm.invalid">Add</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>
