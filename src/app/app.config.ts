@@ -7,13 +7,15 @@ import { tokenInterceptor } from './interceptors/token-interceptor';
 import { httpInterceptor } from './interceptors/http-interceptor';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { dashboardReducer } from './state/reducers/dashboard.reducer';
+import { DashboardEffect } from './state/effects/dashboard.effect';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([tokenInterceptor, httpInterceptor])),
-    provideStore(),
-    provideEffects()
-],
+    provideStore({ dashboard: dashboardReducer }),
+    provideEffects([DashboardEffect]),
+  ],
 };

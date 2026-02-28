@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
-  ActivatedRoute,
-  Router,
-  RouterLink,
+  ActivatedRoute, RouterLink,
   RouterLinkActive,
-  RouterOutlet,
+  RouterOutlet
 } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
-import { DashboardStore } from '../services/dashboard-store';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, filter, map, tap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { DashboardActions } from '../state/actions/dashboard.actions';
+import { selectTabs } from '../state/selectors/dashboard.selectors';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -18,11 +18,10 @@ import { DashboardStore } from '../services/dashboard-store';
   styleUrl: './tab-switcher.scss',
 })
 export class TabSwitcher {
-  private readonly store = inject(DashboardStore);
+  private readonly store = inject(Store);
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
 
-  readonly tabs = this.store.tabs;
+  readonly tabs = toSignal(this.store.select(selectTabs), { initialValue: [] });
 
   constructor() {
     this.route.params
@@ -30,18 +29,7 @@ export class TabSwitcher {
         map((p) => p['dashboardId']),
         filter(Boolean),
         distinctUntilChanged(),
-        switchMap((dashboardId) =>
-          this.store.loadDashboard(dashboardId).pipe(
-            tap((tabs) => {
-              if (!this.route.snapshot.firstChild?.params?.['tabId'] && tabs.length > 0) {
-                this.router.navigate([tabs[0].id], {
-                  relativeTo: this.route,
-                  replaceUrl: true,
-                });
-              }
-            }),
-          ),
-        ),
+        tap((dashboardId) => this.store.dispatch(DashboardActions.loadDashboard({ dashboardId }))),
         takeUntilDestroyed(),
       )
       .subscribe();

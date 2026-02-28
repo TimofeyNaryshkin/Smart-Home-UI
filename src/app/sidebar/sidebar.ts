@@ -3,8 +3,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../services/api-service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map, startWith } from 'rxjs';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, startWith, take, tap } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,13 +12,7 @@ import { AddDashboardForm } from '../add-dashboard-form/add-dashboard-form';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [
-    RouterLink,
-    MatIconModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatListModule,
-  ],
+  imports: [RouterLink, MatIconModule, MatDividerModule, MatButtonModule, MatListModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
@@ -29,6 +23,21 @@ export class Sidebar {
 
   readonly user = toSignal(this.apiService.getProfile());
   readonly list = toSignal(this.apiService.getDashboards());
+
+  constructor() {
+    toObservable(this.list)
+      .pipe(
+        filter((dashboards) => !!dashboards?.length),
+        take(1),
+        tap((dashboards) => {
+          if (!this.router.url.includes('/dashboard/')) {
+            this.router.navigate(['/dashboard', dashboards?.[0].id]);
+          }
+        }),
+        takeUntilDestroyed(),
+      )
+      .subscribe();
+  }
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
