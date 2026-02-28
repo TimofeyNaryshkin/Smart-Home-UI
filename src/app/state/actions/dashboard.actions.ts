@@ -15,5 +15,7 @@ export const DashboardApiActions = createActionGroup({
   events: {
     'Dashboard Loaded Success': props<{ tabs: Tab[]; dashboardId: string }>(),
     'Dashboard Loaded Error': props<{ error: Error }>(),
+    'Dashboard Created Success': props<{ dashboard: TDashboard }>(),
+    'Dashboard Created Error': props<{ error: Error }>(),
   },
 });

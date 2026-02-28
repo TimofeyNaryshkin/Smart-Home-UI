@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDashboardForm } from '../add-dashboard-form/add-dashboard-form';
+import { DashboardList } from '../services/dashboard-list-service';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,10 +20,11 @@ import { AddDashboardForm } from '../add-dashboard-form/add-dashboard-form';
 export class Sidebar {
   private readonly router = inject(Router);
   private readonly apiService = inject(ApiService);
+  private readonly dashboardListService = inject(DashboardList);
   private readonly dialog = inject(MatDialog);
 
   readonly user = toSignal(this.apiService.getProfile());
-  readonly list = toSignal(this.apiService.getDashboards());
+  readonly list = toSignal(this.dashboardListService.dashboards$);
 
   constructor() {
     toObservable(this.list)
