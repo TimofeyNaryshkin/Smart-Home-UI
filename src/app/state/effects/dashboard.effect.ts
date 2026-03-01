@@ -46,7 +46,7 @@ export class DashboardEffect {
       concatMap(({ dashboard }) =>
         this.apiService.createDashboard(dashboard).pipe(
           map((dashboard) => DashboardApiActions.dashboardCreatedSuccess({ dashboard })),
-          catchError((error: Error) => of(DashboardApiActions.dashboardLoadedError({ error }))),
+          catchError((error: Error) => of(DashboardApiActions.dashboardCreatedError({ error }))),
         ),
       ),
     ),

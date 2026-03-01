@@ -6,6 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { DashboardActions } from '../state/actions/dashboard.actions';
+import { DashboardList } from '../services/dashboard-list-service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { uniqueIdValidator } from '../directives/unique-id.directive';
 
 @Component({
   selector: 'app-add-dashboard-form',
@@ -17,9 +20,16 @@ export class AddDashboardForm {
   private readonly store = inject(Store);
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<AddDashboardForm>);
+  private readonly dashboardListService = inject(DashboardList);
+  private readonly existingDashboards = toSignal(this.dashboardListService.dashboards$, {
+    initialValue: [],
+  });
 
   addDashboardForm = this.formBuilder.group({
-    id: ['', [Validators.required, Validators.maxLength(30)]],
+    id: [
+      '',
+      [Validators.required, Validators.maxLength(30), uniqueIdValidator(this.existingDashboards)],
+    ],
     title: ['', [Validators.required, Validators.maxLength(50)]],
     icon: ['', Validators.required],
   });
