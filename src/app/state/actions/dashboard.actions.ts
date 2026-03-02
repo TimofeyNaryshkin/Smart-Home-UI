@@ -8,6 +8,8 @@ export const DashboardActions = createActionGroup({
     'Load Dashboard': props<{ dashboardId: string }>(),
     'Create Dashboard': props<{ dashboard: TDashboard }>(),
     'Delete Dashboard': props<{ dashboardId: string }>(),
+    'Save Dashboard': props<{ dashboardId: string; data: { tabs: Tab[] } }>(),
+    'Restore Tabs': props<{ tabs: Tab[] }>(),
   },
 });
 
@@ -20,5 +22,7 @@ export const DashboardApiActions = createActionGroup({
     'Dashboard Created Error': props<{ error: Error }>(),
     'Dashboard Deleted Success': props<{ dashboardId: string }>(),
     'Dashboard Deleted Error': props<{ error: Error }>(),
+    'Dashboard Saved Success': props<{ tabs: Tab[] }>(),
+    'Dashboard Saved Error': props<{ error: Error }>(),
   },
 });

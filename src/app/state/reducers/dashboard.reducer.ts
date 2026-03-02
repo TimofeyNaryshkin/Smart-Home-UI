@@ -32,4 +32,12 @@ export const dashboardReducer = createReducer(
     error,
     loading: false,
   })),
+  on(DashboardApiActions.dashboardSavedSuccess, (state, { tabs }) => ({
+    ...state,
+    tabs,
+  })),
+  on(DashboardActions.restoreTabs, (state, { tabs }) => ({
+    ...state,
+    tabs,
+  })),
 );

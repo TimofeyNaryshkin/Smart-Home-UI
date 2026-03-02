@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
+import { Tab } from '../models/tab.model';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -23,9 +24,10 @@ export class TabSwitcher {
   private readonly route = inject(ActivatedRoute);
   private readonly dashboardListService = inject(DashboardList);
   private readonly dialog = inject(MatDialog);
+  private originalTabs: Tab[] = [];
 
   readonly tabs = toSignal(this.store.select(selectTabs), { initialValue: [] });
-  readonly dashboardId = toSignal(this.route.params.pipe(map((p) => p['dashboardId'])));
+  readonly dashboardId = toSignal<string>(this.route.params.pipe(map((p) => p['dashboardId'])));
   private readonly dashboards = toSignal(this.dashboardListService.dashboards$, {
     initialValue: [],
   });
@@ -48,6 +50,7 @@ export class TabSwitcher {
 
   enterEditMode() {
     this.isEditMode.set(true);
+    this.originalTabs = structuredClone(this.tabs());
   }
 
   exitEditMode() {
@@ -66,5 +69,19 @@ export class TabSwitcher {
         this.store.dispatch(DashboardActions.deleteDashboard({ dashboardId: dashboard.id }));
       }
     });
+  }
+
+  save() {
+    const dashboardId = this.dashboardId();
+    if (!dashboardId) return;
+    this.store.dispatch(
+      DashboardActions.saveDashboard({ dashboardId, data: { tabs: this.tabs() } }),
+    );
+    this.exitEditMode();
+  }
+
+  discard() {
+    this.store.dispatch(DashboardActions.restoreTabs({ tabs: this.originalTabs }));
+    this.exitEditMode();
   }
 }

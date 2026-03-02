@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, first, map, of, skip, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, exhaustMap, first, map, of, skip, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api-service';
 import { DashboardActions, DashboardApiActions } from '../actions/dashboard.actions';
 import { Router } from '@angular/router';
@@ -93,5 +93,17 @@ export class DashboardEffect {
         }),
       ),
     { dispatch: false },
+  );
+
+  saveDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DashboardActions.saveDashboard),
+      exhaustMap(({ dashboardId, data }) =>
+        this.apiService.saveDashboard(dashboardId, data).pipe(
+          map(() => DashboardApiActions.dashboardSavedSuccess({ tabs: data.tabs })),
+          catchError((error: Error) => of(DashboardApiActions.dashboardSavedError({ error }))),
+        ),
+      ),
+    ),
   );
 }

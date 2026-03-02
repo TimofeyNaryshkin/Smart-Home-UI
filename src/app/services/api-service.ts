@@ -35,4 +35,8 @@ export class ApiService {
   deleteDashboard(dashboardId: string) {
     return this.http.delete(`/dashboards/${dashboardId}`);
   }
+
+  saveDashboard(dashboardId: string, data: { tabs: Tab[] }) {
+    return this.http.put(`/dashboards/${dashboardId}`, data);
+  }
 }
