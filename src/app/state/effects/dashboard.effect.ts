@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, first, map, of, skip, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api-service';
 import { DashboardActions, DashboardApiActions } from '../actions/dashboard.actions';
 import { Router } from '@angular/router';
@@ -59,6 +59,37 @@ export class DashboardEffect {
         tap(({ dashboard }) => {
           this.dashboardListService.refresh();
           this.router.navigate([`/dashboard/${dashboard.id}`]);
+        }),
+      ),
+    { dispatch: false },
+  );
+
+  deleteDashboard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DashboardActions.deleteDashboard),
+      switchMap(({ dashboardId }) =>
+        this.apiService.deleteDashboard(dashboardId).pipe(
+          map(() => DashboardApiActions.dashboardDeletedSuccess({ dashboardId })),
+          catchError((error: Error) => of(DashboardApiActions.dashboardDeletedError({ error }))),
+        ),
+      ),
+    ),
+  );
+
+  afterDashboardDeleted$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(DashboardApiActions.dashboardDeletedSuccess),
+        switchMap(() => {
+          this.dashboardListService.refresh();
+          return this.dashboardListService.dashboards$.pipe(skip(1), first());
+        }),
+        tap((dashboards) => {
+          if (dashboards.length) {
+            this.router.navigate(['/dashboard', dashboards[0].id]);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
         }),
       ),
     { dispatch: false },

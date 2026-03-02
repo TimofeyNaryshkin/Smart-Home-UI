@@ -1,16 +1,26 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel">
-  @for (t of tabs(); track t.id) {
-    <a
-      mat-tab-link
-      [routerLink]="[t.id]"
-      routerLinkActive
-      #rla="routerLinkActive"
-      [active]="rla.isActive"
-    >
-      {{ t.title }}
-    </a>
-  }
-</nav>
+@if (isEditMode()) {
+  <div class="tabs-header">
+    <h2>{{ currentDashboard()?.title }}</h2>
+    <button matIconButton><mat-icon fontIcon="edit" /></button>
+  </div>
+}
+<div>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    @for (t of tabs(); track t.id) {
+      <a
+        mat-tab-link
+        [routerLink]="[t.id]"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        {{ t.title }}
+      </a>
+    }
+  </nav>
+  <button matIconButton (click)="enterEditMode()"><mat-icon fontIcon="edit" /></button>
+  <button matIconButton (click)="removeDashboard()"><mat-icon fontIcon="delete" /></button>
+</div>
 <mat-tab-nav-panel #tabPanel>
   <router-outlet />
 </mat-tab-nav-panel>

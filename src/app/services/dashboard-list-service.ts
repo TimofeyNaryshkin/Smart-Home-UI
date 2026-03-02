@@ -16,6 +16,6 @@ export class DashboardList {
   );
 
   refresh() {
-    this.subject$.next()
+    this.subject$.next();
   }
 }

@@ -4,6 +4,7 @@
   @if (list()?.length) {
     @for (link of list(); track link) {
       <mat-list-item
+        [activated]="currentDashboardId() === link.id"
         [routerLink]="currentDashboardId() === link.id ? null : ['/dashboard', link.id]"
       >
         <mat-icon matListItemIcon fontIcon="{{ link.icon }}" />

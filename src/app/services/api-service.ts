@@ -31,4 +31,8 @@ export class ApiService {
   createDashboard(data: TDashboard): Observable<TDashboard> {
     return this.http.post<TDashboard>(`/dashboards`, data);
   }
+
+  deleteDashboard(dashboardId: string) {
+    return this.http.delete(`/dashboards/${dashboardId}`);
+  }
 }

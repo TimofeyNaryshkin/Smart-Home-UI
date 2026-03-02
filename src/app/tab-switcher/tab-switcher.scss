@@ -1,0 +1,14 @@
+div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+nav {
+  flex-grow: 2;
+}
+
+.tabs-header {
+  padding-left: 1rem;
+}
