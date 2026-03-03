@@ -9,7 +9,7 @@ export const httpInterceptor: HttpInterceptorFn = (request, next) => {
   const router = inject(Router);
 
   const isRelative = !request.url.startsWith('http://') && !request.url.startsWith('https://');
-  const url = isRelative ? `/api${request.url}` : request.url;
+  const url = isRelative ? `http://localhost:3004/api${request.url}` : request.url;
 
   const newRequest = request.clone({ url });
   return next(newRequest).pipe(
