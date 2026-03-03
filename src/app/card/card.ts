@@ -9,6 +9,12 @@ import { Highlight } from '../directives/highlight';
 import { EditMode } from '../services/edit-mode-service';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { Store } from '@ngrx/store';
+import { DashboardActions } from '../state/actions/dashboard.actions';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -26,9 +32,14 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './card.scss',
 })
 export class Card {
+  readonly editModeService = inject(EditMode);
+  private readonly store = inject(Store);
+  private readonly route = inject(ActivatedRoute);
+  private readonly params = toSignal(this.route.params);
+
   data = model.required<TCard>();
   details = input.required<{ order: number; length: number }>();
-  readonly editModeService = inject(EditMode);
+  isExamaple = input(false);
 
   isDeviceGroup = computed(() => {
     const devices = this.data().items.filter((item) => item.type === 'device');
@@ -47,8 +58,6 @@ export class Card {
     return devices.some((d) => d.state === true);
   });
 
-  isAddButtonDisabled = computed(() => this.details().order === this.details().length);
-
   toggleIsGroupActive() {
     const newState = !this.isGroupActive();
     const updatedItems = this.data().items.map((item) => {
@@ -61,5 +70,31 @@ export class Card {
     const updatedItems = [...this.data().items];
     updatedItems[index] = updatedDevice;
     this.data.update((card) => ({ ...card, items: updatedItems }));
+  }
+
+  reorder(direction: 'left' | 'right') {
+    const newIndex = this.details().order + (direction === 'left' ? -1 : 1) - 1;
+    const tabId = this.params()?.['tabId'];
+    this.store.dispatch(
+      DashboardActions.reorderCard({
+        tabId,
+        cardId: this.data().id,
+        newIndex,
+      }),
+    );
+  }
+
+  onOrderChange(event: Event) {
+    const value = +(event.target as HTMLInputElement).value;
+    if (value < 1 || value > this.details().length) return;
+
+    const tabId = this.params()?.['tabId'];
+    this.store.dispatch(
+      DashboardActions.reorderCard({
+        tabId,
+        cardId: this.data().id,
+        newIndex: value - 1,
+      }),
+    );
   }
 }

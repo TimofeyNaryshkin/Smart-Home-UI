@@ -25,11 +25,28 @@ mat-card-header {
 mat-card-actions {
   display: flex;
   justify-content: space-between;
-  
 }
 
 .card-edit-controls {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+}
+
+input {
+  width: 2.5rem;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
 }

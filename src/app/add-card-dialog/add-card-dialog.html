@@ -2,6 +2,8 @@
 <mat-dialog-content>
   @for (card of cards; track card.id) {
     <app-card
+      [isExamaple]="true"
+      [details]="{ order: $index + 1, length: cards.length }"
       [class]="card.layout === 'horizontalLayout' ? '' : 'example-card'"
       [mat-dialog-close]="card.layout"
       [data]="card"

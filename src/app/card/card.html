@@ -6,7 +6,7 @@
         [checked]="isGroupActive()"
         (change)="toggleIsGroupActive()"
         [aria-label]="data().title"
-      ></mat-slide-toggle>
+      />
     }
   </mat-card-header>
   <mat-card-content [className]="data().layout">
@@ -22,15 +22,19 @@
       }
     }
   </mat-card-content>
-  @if (editModeService.isEditMode()) {
+  @if (editModeService.isEditMode() && !isExamaple()) {
     <mat-card-actions>
       <button matButton>EDIT</button>
       <div class="card-edit-controls">
-        <button matIconButton [disabled]="details().order === 1">
+        <button (click)="reorder('left')" matIconButton [disabled]="this.details().order <= 1">
           <mat-icon fontIcon="remove" />
         </button>
-        <span>{{ details().order }}</span>
-        <button matIconButton [disabled]="isAddButtonDisabled()">
+        <input [value]="details().order" (change)="onOrderChange($event)" type="number" />
+        <button
+          (click)="reorder('right')"
+          matIconButton
+          [disabled]="this.details().order >= this.details().length"
+        >
           <mat-icon fontIcon="add" />
         </button>
         <button matIconButton><mat-icon fontIcon="more_vert" /></button>

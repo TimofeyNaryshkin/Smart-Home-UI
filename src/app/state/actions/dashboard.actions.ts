@@ -16,6 +16,7 @@ export const DashboardActions = createActionGroup({
     'Edit Tab': props<{ originalTitle: string; newTitle: string }>(),
     'Remove Tab': props<{ tabId: string }>(),
     'Add Card': props<{ tabId: string; layout: TCard['layout'] }>(),
+    'Reorder Card': props<{ tabId: string; cardId: string; newIndex: number }>(),
   },
 });
 
