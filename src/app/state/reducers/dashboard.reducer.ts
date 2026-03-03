@@ -40,4 +40,51 @@ export const dashboardReducer = createReducer(
     ...state,
     tabs,
   })),
+  on(DashboardActions.reorderTab, (state, { tabId, direction }) => {
+    const index = state.tabs.findIndex((tab) => tab.id === tabId);
+    if (index === -1) return state;
+    const newTabs = [...state.tabs];
+
+    if (direction === 'left') {
+      [newTabs[index - 1], newTabs[index]] = [newTabs[index], newTabs[index - 1]];
+    }
+
+    if (direction === 'right') {
+      [newTabs[index], newTabs[index + 1]] = [newTabs[index + 1], newTabs[index]];
+    }
+    return {
+      ...state,
+      tabs: newTabs,
+    };
+  }),
+  on(DashboardActions.addTab, (state, { title }) => ({
+    ...state,
+    tabs: [...state.tabs, { title, id: title.replaceAll(' ', '-').toLowerCase(), cards: [] }],
+  })),
+  on(DashboardActions.editTab, (state, { originalTitle, newTitle }) => {
+    if (newTitle === originalTitle) return state;
+    const tab = state.tabs.find((tab) => tab.title === originalTitle);
+    if (!tab) return state;
+    const index = state.tabs.indexOf(tab);
+    const newTabs = [...state.tabs];
+    newTabs[index] = {
+      title: newTitle,
+      id: newTitle.replaceAll(' ', '-').toLowerCase(),
+      cards: tab.cards,
+    };
+    return {
+      ...state,
+      tabs: newTabs,
+    };
+  }),
+  on(DashboardActions.removeTab, (state, { tabId }) => {
+    const index = state.tabs.findIndex((tab) => tab.id === tabId);
+    if (index === -1) return state;
+    const newTabs = [...state.tabs];
+    newTabs.splice(index, 1);
+    return {
+      ...state,
+      tabs: newTabs,
+    };
+  }),
 );

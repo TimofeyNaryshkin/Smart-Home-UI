@@ -12,6 +12,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { Tab } from '../models/tab.model';
+import { EditTabDialog } from '../edit-tab-dialog/edit-tab-dialog';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -83,5 +84,35 @@ export class TabSwitcher {
   discard() {
     this.store.dispatch(DashboardActions.restoreTabs({ tabs: this.originalTabs }));
     this.exitEditMode();
+  }
+
+  reorder(tabId: string, direction: 'left' | 'right') {
+    this.store.dispatch(DashboardActions.reorderTab({ tabId, direction }));
+  }
+
+  add() {
+    const dialogRef = this.dialog.open(EditTabDialog, {
+      data: { message: `Please enter new tab title`, tabsSignal: this.tabs },
+    });
+    dialogRef.afterClosed().subscribe((title) => {
+      if (title) {
+        this.store.dispatch(DashboardActions.addTab({ title }));
+      }
+    });
+  }
+
+  edit(originalTitle: string) {
+    const dialogRef = this.dialog.open(EditTabDialog, {
+      data: { message: `Please enter new tab title`, tabsSignal: this.tabs, title: originalTitle },
+    });
+    dialogRef.afterClosed().subscribe((newTitle) => {
+      if (newTitle) {
+        this.store.dispatch(DashboardActions.editTab({ originalTitle, newTitle }));
+      }
+    });
+  }
+
+  remove(tabId: string) {
+    this.store.dispatch(DashboardActions.removeTab({ tabId }));
   }
 }

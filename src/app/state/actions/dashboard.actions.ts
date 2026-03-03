@@ -10,6 +10,10 @@ export const DashboardActions = createActionGroup({
     'Delete Dashboard': props<{ dashboardId: string }>(),
     'Save Dashboard': props<{ dashboardId: string; data: { tabs: Tab[] } }>(),
     'Restore Tabs': props<{ tabs: Tab[] }>(),
+    'Reorder Tab': props<{ tabId: string; direction: 'left' | 'right' }>(),
+    'Add Tab': props<{ title: string }>(),
+    'Edit Tab': props<{ originalTitle: string; newTitle: string }>(),
+    'Remove Tab': props<{ tabId: string }>(),
   },
 });
 

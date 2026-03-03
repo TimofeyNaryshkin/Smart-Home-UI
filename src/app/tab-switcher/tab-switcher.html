@@ -18,10 +18,31 @@
         #rla="routerLinkActive"
         [active]="rla.isActive"
       >
-        {{ t.title }}
+        @if (isEditMode() && rla.isActive) {
+          <div class="tab-controls">
+            <button matIconButton (click)="reorder(t.id, 'left')" [disabled]="$index === 0">
+              <mat-icon fontIcon="arrow_back" />
+            </button>
+            {{ t.title }}
+            <button matIconButton (click)="edit(t.title)"><mat-icon fontIcon="edit" /></button>
+            <button matIconButton (click)="remove(t.id)"><mat-icon fontIcon="delete" /></button>
+            <button
+              matIconButton
+              (click)="reorder(t.id, 'right')"
+              [disabled]="$index === tabs().length - 1"
+            >
+              <mat-icon fontIcon="arrow_forward" />
+            </button>
+          </div>
+        } @else {
+          {{ t.title }}
+        }
       </a>
     }
   </nav>
+  @if (isEditMode()) {
+    <button matIconButton (click)="add()"><mat-icon fontIcon="add" /></button>
+  }
   @if (!isEditMode()) {
     <button matIconButton (click)="enterEditMode()"><mat-icon fontIcon="edit" /></button>
     <button matIconButton (click)="removeDashboard()"><mat-icon fontIcon="delete" /></button>
