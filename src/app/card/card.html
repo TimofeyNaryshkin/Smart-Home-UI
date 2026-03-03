@@ -22,4 +22,19 @@
       }
     }
   </mat-card-content>
+  @if (editModeService.isEditMode()) {
+    <mat-card-actions>
+      <button matButton>EDIT</button>
+      <div class="card-edit-controls">
+        <button matIconButton [disabled]="details().order === 1">
+          <mat-icon fontIcon="remove" />
+        </button>
+        <span>{{ details().order }}</span>
+        <button matIconButton [disabled]="isAddButtonDisabled()">
+          <mat-icon fontIcon="add" />
+        </button>
+        <button matIconButton><mat-icon fontIcon="more_vert" /></button>
+      </div>
+    </mat-card-actions>
+  }
 </mat-card>

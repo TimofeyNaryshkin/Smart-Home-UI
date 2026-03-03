@@ -1,0 +1,6 @@
+@if (cards()) {
+  <app-card-list [cards]="cards()!" />
+}
+@if (this.editModeService.isEditMode()) {
+  <button (click)="addCard()" class="add-card-button" matButton="filled">ADD CARD</button>
+}

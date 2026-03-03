@@ -1,6 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { TDashboard } from '../../models/dashboard.model';
 import { Tab } from '../../models/tab.model';
+import { TCard } from '../../models/card.model';
 
 export const DashboardActions = createActionGroup({
   source: 'Dashboard',
@@ -14,6 +15,7 @@ export const DashboardActions = createActionGroup({
     'Add Tab': props<{ title: string }>(),
     'Edit Tab': props<{ originalTitle: string; newTitle: string }>(),
     'Remove Tab': props<{ tabId: string }>(),
+    'Add Card': props<{ tabId: string; layout: TCard['layout'] }>(),
   },
 });
 

@@ -1,3 +1,7 @@
+mat-card {
+  min-height: 9rem;
+}
+
 mat-card-content {
   display: flex;
   justify-content: space-between;
@@ -15,5 +19,17 @@ app-device {
 mat-card-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.card-edit-controls {
+  display: flex;
+  gap: 0.5rem;
   align-items: center;
 }

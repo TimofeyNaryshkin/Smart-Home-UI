@@ -1,10 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, filter, map, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { DashboardActions, DashboardApiActions } from '../state/actions/dashboard.actions';
+import { DashboardActions } from '../state/actions/dashboard.actions';
 import { selectTabs } from '../state/selectors/dashboard.selectors';
 import { DashboardList } from '../services/dashboard-list-service';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog';
 import { Tab } from '../models/tab.model';
 import { EditTabDialog } from '../edit-tab-dialog/edit-tab-dialog';
+import { EditMode } from '../services/edit-mode-service';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -24,6 +25,7 @@ export class TabSwitcher {
   private readonly store = inject(Store);
   private readonly route = inject(ActivatedRoute);
   private readonly dashboardListService = inject(DashboardList);
+  readonly editModeService = inject(EditMode);
   private readonly dialog = inject(MatDialog);
   private originalTabs: Tab[] = [];
 
@@ -35,7 +37,6 @@ export class TabSwitcher {
   readonly currentDashboard = computed(() =>
     this.dashboards().find((dashboard) => dashboard.id === this.dashboardId()),
   );
-  readonly isEditMode = signal(false);
 
   constructor() {
     this.route.params
@@ -43,19 +44,22 @@ export class TabSwitcher {
         map((p) => p['dashboardId']),
         filter(Boolean),
         distinctUntilChanged(),
-        tap((dashboardId) => this.store.dispatch(DashboardActions.loadDashboard({ dashboardId }))),
+        tap((dashboardId) => {
+          this.editModeService.exit()
+          this.store.dispatch(DashboardActions.loadDashboard({ dashboardId }))
+        }),
         takeUntilDestroyed(),
       )
       .subscribe();
   }
 
   enterEditMode() {
-    this.isEditMode.set(true);
+    this.editModeService.enter();
     this.originalTabs = structuredClone(this.tabs());
   }
 
   exitEditMode() {
-    this.isEditMode.set(false);
+    this.editModeService.exit();
   }
 
   removeDashboard() {

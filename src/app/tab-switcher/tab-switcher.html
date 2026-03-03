@@ -1,4 +1,4 @@
-@if (isEditMode()) {
+@if (this.editModeService.isEditMode()) {
   <div class="tabs-header">
     <h2>{{ currentDashboard()?.title }}</h2>
     <button matIconButton><mat-icon fontIcon="edit" /></button>
@@ -18,7 +18,7 @@
         #rla="routerLinkActive"
         [active]="rla.isActive"
       >
-        @if (isEditMode() && rla.isActive) {
+        @if (this.editModeService.isEditMode() && rla.isActive) {
           <div class="tab-controls">
             <button matIconButton (click)="reorder(t.id, 'left')" [disabled]="$index === 0">
               <mat-icon fontIcon="arrow_back" />
@@ -40,10 +40,10 @@
       </a>
     }
   </nav>
-  @if (isEditMode()) {
+  @if (this.editModeService.isEditMode()) {
     <button matIconButton (click)="add()"><mat-icon fontIcon="add" /></button>
   }
-  @if (!isEditMode()) {
+  @if (!this.editModeService.isEditMode()) {
     <button matIconButton (click)="enterEditMode()"><mat-icon fontIcon="edit" /></button>
     <button matIconButton (click)="removeDashboard()"><mat-icon fontIcon="delete" /></button>
   }

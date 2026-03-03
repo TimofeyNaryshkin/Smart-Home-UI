@@ -87,4 +87,20 @@ export const dashboardReducer = createReducer(
       tabs: newTabs,
     };
   }),
+  on(DashboardActions.addCard, (state, { tabId, layout }) => {
+    const index = state.tabs.findIndex((tab) => tab.id === tabId);
+    if (index === -1) return state;
+    const newTabs = [...state.tabs];
+    newTabs[index] = {
+      ...newTabs[index],
+      cards: [
+        ...newTabs[index].cards,
+        { layout, id: newTabs[index].cards.length.toString(), title: 'Empty', items: [] },
+      ],
+    };
+    return {
+      ...state,
+      tabs: newTabs,
+    };
+  }),
 );
