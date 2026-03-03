@@ -105,8 +105,9 @@ export const dashboardReducer = createReducer(
   }),
   on(DashboardActions.reorderCard, (state, { tabId, cardId, newIndex }) => {
     const tabIndex = state.tabs.findIndex((tab) => tab.id === tabId);
+    if (tabIndex === -1) return state;
     const cardIndex = state.tabs[tabIndex].cards.findIndex((card) => card.id === cardId);
-    if (tabIndex === -1 || cardIndex == -1) return state;
+    if (cardIndex == -1) return state;
     const newTabs = [...state.tabs];
     const newCards = [...state.tabs[tabIndex].cards];
     [newCards[cardIndex], newCards[newIndex]] = [newCards[newIndex], newCards[cardIndex]];
@@ -123,8 +124,9 @@ export const dashboardReducer = createReducer(
   }),
   on(DashboardActions.removeCard, (state, { tabId, cardId }) => {
     const tabIndex = state.tabs.findIndex((tab) => tab.id === tabId);
+    if (tabIndex === -1) return state;
     const cardIndex = state.tabs[tabIndex].cards.findIndex((card) => card.id === cardId);
-    if (tabIndex === -1 || cardIndex == -1) return state;
+    if (cardIndex == -1) return state;
     const newTabs = [...state.tabs];
     const newCards = [...state.tabs[tabIndex].cards];
 
