@@ -9,8 +9,6 @@ import { Highlight } from '../directives/highlight';
 import { EditMode } from '../services/edit-mode-service';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { DashboardActions } from '../state/actions/dashboard.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -94,6 +92,16 @@ export class Card {
         tabId,
         cardId: this.data().id,
         newIndex: value - 1,
+      }),
+    );
+  }
+
+  remove() {
+    const tabId = this.params()?.['tabId'];
+    this.store.dispatch(
+      DashboardActions.removeCard({
+        tabId,
+        cardId: this.data().id,
       }),
     );
   }

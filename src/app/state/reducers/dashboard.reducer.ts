@@ -121,4 +121,22 @@ export const dashboardReducer = createReducer(
       tabs: newTabs,
     };
   }),
+  on(DashboardActions.removeCard, (state, { tabId, cardId }) => {
+    const tabIndex = state.tabs.findIndex((tab) => tab.id === tabId);
+    const cardIndex = state.tabs[tabIndex].cards.findIndex((card) => card.id === cardId);
+    if (tabIndex === -1 || cardIndex == -1) return state;
+    const newTabs = [...state.tabs];
+    const newCards = [...state.tabs[tabIndex].cards];
+
+    newCards.splice(cardIndex, 1);
+    newTabs[tabIndex] = {
+      ...newTabs[tabIndex],
+      cards: newCards,
+    };
+
+    return {
+      ...state,
+      tabs: newTabs,
+    };
+  }),
 );
