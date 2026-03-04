@@ -25,6 +25,12 @@ app-device {
   width: 100%;
 }
 
+.empty-state {
+  color: gray;
+  font-style: italic;
+  margin: auto;
+}
+
 mat-card-header {
   display: flex;
   justify-content: space-between;

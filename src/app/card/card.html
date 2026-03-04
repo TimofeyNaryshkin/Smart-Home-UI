@@ -20,6 +20,8 @@
       } @else {
         <app-sensor [data]="i" />
       }
+    } @empty {
+      <p class="empty-state">No items</p>
     }
   </mat-card-content>
   @if (editModeService.isEditMode() && !isExamaple()) {
