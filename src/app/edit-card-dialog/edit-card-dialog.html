@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Card Configuration</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input [formControl]="title" matInput type="text" placeholder="Title (optional)" />
+  </mat-form-field>
+  <h3>Entities</h3>
+  <mat-list>
+    @for (item of items; track $index) {
+      <div>
+        <mat-icon [fontIcon]="item.icon" />
+        <mat-list-item>{{ item.label }}</mat-list-item>
+        <button (click)="removeItem($index)" matIconButton><mat-icon fontIcon="close" /></button>
+      </div>
+    }
+  </mat-list>
+  @if (data.card.layout !== 'singleDevice' || items.length === 0) {
+    <mat-form-field>
+      <mat-label>Select an entity</mat-label>
+      <mat-select [(value)]="selected">
+        @for (entity of availableEntities(); track entity.id) {
+          <mat-option [value]="entity">{{ entity.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <button class="add-button" (click)="addItem()" matButton [disabled]="!selected">Add</button>
+  }
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton [mat-dialog-close]="false">Cancel</button>
+  <button matButton [mat-dialog-close]="{ ...data.card, title: title.value, items }">Save</button>
+</mat-dialog-actions>

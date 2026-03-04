@@ -5,7 +5,7 @@ import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
 export default defineConfig([
   {
-    ignores: ['**/*.{spec,config}.ts', '**/main.ts'],
+    ignores: ['**/*.{spec,config}.ts', '**/main.ts', '.angular'],
   },
   {
     files: ['**/*.ts'],

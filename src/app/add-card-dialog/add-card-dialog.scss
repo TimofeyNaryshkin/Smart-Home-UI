@@ -1,0 +1,15 @@
+mat-dialog-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.example-card {
+  min-width: 300px;
+}
+
+.example-card ::ng-deep app-sensor > div {
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}

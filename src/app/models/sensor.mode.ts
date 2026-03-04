@@ -1,4 +1,5 @@
 export interface TSensor {
+  id?: string;
   type: 'sensor';
   icon: string;
   label: string;

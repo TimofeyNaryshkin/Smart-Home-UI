@@ -1,16 +1,53 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel">
-  @for (t of tabs(); track t.id) {
-    <a
-      mat-tab-link
-      [routerLink]="[t.id]"
-      routerLinkActive
-      #rla="routerLinkActive"
-      [active]="rla.isActive"
-    >
-      {{ t.title }}
-    </a>
+@if (this.editModeService.isEditMode()) {
+  <div class="tabs-header">
+    <h2>{{ currentDashboard()?.title }}</h2>
+    <button matIconButton><mat-icon fontIcon="edit" /></button>
+    <div>
+      <button matButton (click)="discard()">Discard</button>
+      <button matButton (click)="save()">Save</button>
+    </div>
+  </div>
+}
+<div>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    @for (t of tabs(); track t.id) {
+      <a
+        mat-tab-link
+        [routerLink]="[t.id]"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        @if (this.editModeService.isEditMode() && rla.isActive) {
+          <div class="tab-controls">
+            <button matIconButton (click)="reorder(t.id, 'left')" [disabled]="$index === 0">
+              <mat-icon fontIcon="arrow_back" />
+            </button>
+            {{ t.title }}
+            <button matIconButton (click)="edit(t.title)"><mat-icon fontIcon="edit" /></button>
+            <button matIconButton (click)="remove(t.id)"><mat-icon fontIcon="delete" /></button>
+            <button
+              matIconButton
+              (click)="reorder(t.id, 'right')"
+              [disabled]="$index === tabs().length - 1"
+            >
+              <mat-icon fontIcon="arrow_forward" />
+            </button>
+          </div>
+        } @else {
+          {{ t.title }}
+        }
+      </a>
+    }
+  </nav>
+  @if (this.editModeService.isEditMode()) {
+    <button matIconButton (click)="add()"><mat-icon fontIcon="add" /></button>
   }
-</nav>
+  @if (!this.editModeService.isEditMode()) {
+    <button matIconButton (click)="enterEditMode()"><mat-icon fontIcon="edit" /></button>
+    <button matIconButton (click)="removeDashboard()"><mat-icon fontIcon="delete" /></button>
+  }
+</div>
 <mat-tab-nav-panel #tabPanel>
   <router-outlet />
 </mat-tab-nav-panel>

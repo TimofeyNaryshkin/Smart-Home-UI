@@ -1,3 +1,7 @@
 @for (card of cards(); track card.id) {
-  <app-card [data]="card" (dataChange)="updateCard($index, $event)" />
+  <app-card
+    [data]="card"
+    [details]="{ order: $index + 1, length: cards().length }"
+    (dataChange)="updateCard($index, $event)"
+  />
 }

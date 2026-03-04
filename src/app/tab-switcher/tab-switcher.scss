@@ -1,0 +1,19 @@
+div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+nav {
+  flex-grow: 2;
+}
+
+.tabs-header {
+  padding-left: 1rem;
+}
+
+.tab-controls {
+  padding: 0;
+  gap: 0.5rem;
+}
