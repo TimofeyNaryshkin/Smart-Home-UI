@@ -141,4 +141,23 @@ export const dashboardReducer = createReducer(
       tabs: newTabs,
     };
   }),
+  on(DashboardActions.editCard, (state, { tabId, cardId, newCard }) => {
+    const tabIndex = state.tabs.findIndex((tab) => tab.id === tabId);
+    if (tabIndex === -1) return state;
+    const cardIndex = state.tabs[tabIndex].cards.findIndex((card) => card.id === cardId);
+    if (cardIndex == -1) return state;
+    const newTabs = [...state.tabs];
+    const newCards = [...state.tabs[tabIndex].cards];
+
+    newCards[cardIndex] = newCard
+    newTabs[tabIndex] = {
+      ...newTabs[tabIndex],
+      cards: newCards,
+    };
+
+    return {
+      ...state,
+      tabs: newTabs,
+    };
+  }),
 );

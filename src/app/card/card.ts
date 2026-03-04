@@ -13,6 +13,8 @@ import { Store } from '@ngrx/store';
 import { DashboardActions } from '../state/actions/dashboard.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EditCardDialog } from '../edit-card-dialog/edit-card-dialog';
 
 @Component({
   selector: 'app-card',
@@ -33,6 +35,7 @@ export class Card {
   readonly editModeService = inject(EditMode);
   private readonly store = inject(Store);
   private readonly route = inject(ActivatedRoute);
+  private readonly dialog = inject(MatDialog);
   private readonly params = toSignal(this.route.params);
 
   data = model.required<TCard>();
@@ -104,5 +107,23 @@ export class Card {
         cardId: this.data().id,
       }),
     );
+  }
+
+  edit() {
+    const dialogRef = this.dialog.open(EditCardDialog, {
+      data: { card: this.data() },
+      width: '100%',
+      maxWidth: '50vw',
+      height: '100%',
+      maxHeight: '60vh',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      const tabId = this.params()?.['tabId'];
+      if (result) {
+        this.store.dispatch(
+          DashboardActions.editCard({ tabId, cardId: this.data().id, newCard: result }),
+        );
+      }
+    });
   }
 }

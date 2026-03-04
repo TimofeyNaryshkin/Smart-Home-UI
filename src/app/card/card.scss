@@ -5,11 +5,20 @@ mat-card {
 mat-card-content {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   padding: 0 16px;
 }
 
 .verticalLayout {
   flex-direction: column;
+}
+
+::ng-deep .horizontalLayout > app-device > div {
+  flex-direction: column;
+  gap: 1rem;
+  div {
+    flex-direction: column-reverse;
+  }
 }
 
 app-device {
