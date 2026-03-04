@@ -6,6 +6,7 @@ import { User } from '../models/user.model';
 import { TDashboard } from '../models/dashboard.model';
 import { Tab } from '../models/tab.model';
 import { TDevice } from '../models/device.models';
+import { TSensor } from '../models/sensor.mode';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +44,9 @@ export class ApiService {
 
   toggleDevice(deviceId: string, data: { state: boolean }): Observable<TDevice> {
     return this.http.patch<TDevice>(`/devices/${deviceId}`, data);
+  }
+
+  getDevices(): Observable<(TDevice | TSensor)[]> {
+    return this.http.get<(TDevice | TSensor)[]>('/devices');
   }
 }

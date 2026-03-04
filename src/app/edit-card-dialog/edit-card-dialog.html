@@ -8,9 +8,7 @@
     @for (item of items; track $index) {
       <div>
         <mat-icon [fontIcon]="item.icon" />
-        <mat-list-item>
-          {{ item.label }}
-        </mat-list-item>
+        <mat-list-item>{{ item.label }}</mat-list-item>
         <button (click)="removeItem($index)" matIconButton><mat-icon fontIcon="close" /></button>
       </div>
     }
@@ -19,16 +17,12 @@
     <mat-form-field>
       <mat-label>Select an entity</mat-label>
       <mat-select [(value)]="selected">
-        @for (option of options; track option.type) {
-          <mat-option [value]="option.type">{{ option.type }}</mat-option>
+        @for (entity of availableEntities(); track entity.id) {
+          <mat-option [value]="entity">{{ entity.label }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
-    @if (selected === 'device') {
-      <app-device-form (itemAdded)="addItem($event)" />
-    } @else if (selected === 'sensor') {
-      <app-sensor-form (itemAdded)="addItem($event)" />
-    }
+    <button (click)="addItem()" matButton [disabled]="!selected">Add</button>
   }
 </mat-dialog-content>
 <mat-dialog-actions>

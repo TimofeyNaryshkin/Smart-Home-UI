@@ -9,8 +9,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { TCard } from '../models/card.model';
-import { DeviceForm } from '../device-form/device-form';
-import { SensorForm } from '../sensor-form/sensor-form';
+import { ApiService } from '../services/api-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-edit-card-dialog',
@@ -22,27 +22,27 @@ import { SensorForm } from '../sensor-form/sensor-form';
     ReactiveFormsModule,
     MatListModule,
     MatIconModule,
-    DeviceForm,
-    SensorForm,
   ],
   templateUrl: './edit-card-dialog.html',
   styleUrl: './edit-card-dialog.scss',
 })
 export class EditCardDialog {
   readonly data = inject<{ card: TCard }>(MAT_DIALOG_DATA);
+  private readonly apiService = inject(ApiService);
 
-  selected = '';
+  readonly availableEntities = toSignal(this.apiService.getDevices(), { initialValue: [] });
+
+  selected: TDevice | TSensor | null = null;
   items = [...this.data.card.items];
-  readonly options: Partial<TDevice | TSensor>[] = [{ type: 'device' }, { type: 'sensor' }];
-
   title = new FormControl(this.data.card.title);
 
   removeItem(index: number) {
     this.items.splice(index, 1);
   }
 
-  addItem(item: TDevice | TSensor) {
-    this.items = [...this.items, item];
-    this.selected = '';
+  addItem() {
+    if (!this.selected) return;
+    this.items = [...this.items, this.selected];
+    this.selected = null;
   }
 }
