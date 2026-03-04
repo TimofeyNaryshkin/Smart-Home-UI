@@ -1,9 +1,8 @@
-import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 import { TDashboard } from '../../models/dashboard.model';
 import { Tab } from '../../models/tab.model';
 import { TCard } from '../../models/card.model';
 import { TDevice } from '../../models/device.models';
-import { TSensor } from '../../models/sensor.mode';
 
 export const DashboardActions = createActionGroup({
   source: 'Dashboard',

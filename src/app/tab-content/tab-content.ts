@@ -31,12 +31,12 @@ export class TabContent {
   });
 
   addCard() {
-    const dialogRef = this.dialog.open(AddCardDialog, {
+    const dialogReference = this.dialog.open(AddCardDialog, {
       maxWidth: 'fit-content',
       height: '100%',
       maxHeight: '70vh',
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogReference.afterClosed().subscribe((result) => {
       const tabId = this.params()?.['tabId'];
       if (result) {
         this.store.dispatch(DashboardActions.addCard({ tabId, layout: result }));

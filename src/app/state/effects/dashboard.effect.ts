@@ -85,7 +85,7 @@ export class DashboardEffect {
           return this.dashboardListService.dashboards$.pipe(skip(1), first());
         }),
         tap((dashboards) => {
-          if (dashboards.length) {
+          if (dashboards.length > 0) {
             this.router.navigate(['/dashboard', dashboards[0].id]);
           } else {
             this.router.navigate(['/dashboard']);

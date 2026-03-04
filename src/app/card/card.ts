@@ -64,10 +64,10 @@ export class Card {
     const updatedItems = this.data().items.map((item) => {
       return item.type === 'device' ? { ...item, state: newState } : item;
     });
-    updatedItems.forEach((item) => {
+    for (const item of updatedItems) {
       if (item.type !== 'device') return;
       this.updateDevice(item);
-    });
+    }
   }
 
   updateDevice(updatedDevice: TDevice) {
@@ -121,14 +121,14 @@ export class Card {
   }
 
   edit() {
-    const dialogRef = this.dialog.open(EditCardDialog, {
+    const dialogReference = this.dialog.open(EditCardDialog, {
       data: { card: this.data() },
       width: '100%',
       maxWidth: '50vw',
       height: '100%',
       maxHeight: '60vh',
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogReference.afterClosed().subscribe((result) => {
       const tabId = this.params()?.['tabId'];
       if (result) {
         this.store.dispatch(

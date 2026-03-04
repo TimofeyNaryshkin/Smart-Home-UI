@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatdialogReference } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { DashboardActions } from '../state/actions/dashboard.actions';
 import { DashboardList } from '../services/dashboard-list-service';
@@ -19,7 +19,7 @@ import { uniqueIdValidator } from '../directives/unique-id.directive';
 export class AddDashboardForm {
   private readonly store = inject(Store);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly dialogRef = inject(MatDialogRef<AddDashboardForm>);
+  private readonly dialogReference = inject(MatdialogReference<AddDashboardForm>);
   private readonly dashboardListService = inject(DashboardList);
   private readonly existingDashboards = toSignal(this.dashboardListService.dashboards$, {
     initialValue: [],
@@ -38,7 +38,7 @@ export class AddDashboardForm {
     const { id, title, icon } = this.addDashboardForm.value;
     if (id && title && icon) {
       this.store.dispatch(DashboardActions.createDashboard({ dashboard: { id, title, icon } }));
-      this.dialogRef.close();
+      this.dialogReference.close();
     }
   }
 }

@@ -45,8 +45,8 @@ export class TabSwitcher {
         filter(Boolean),
         distinctUntilChanged(),
         tap((dashboardId) => {
-          this.editModeService.exit()
-          this.store.dispatch(DashboardActions.loadDashboard({ dashboardId }))
+          this.editModeService.exit();
+          this.store.dispatch(DashboardActions.loadDashboard({ dashboardId }));
         }),
         takeUntilDestroyed(),
       )
@@ -66,10 +66,10 @@ export class TabSwitcher {
     const dashboard = this.currentDashboard();
     if (!dashboard) return;
 
-    const dialogRef = this.dialog.open(ConfirmDialog, {
+    const dialogReference = this.dialog.open(ConfirmDialog, {
       data: { title: `Delete ${dashboard.title} Dashboard`, message: 'Are you sure?' },
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogReference.afterClosed().subscribe((result) => {
       if (result) {
         this.store.dispatch(DashboardActions.deleteDashboard({ dashboardId: dashboard.id }));
       }
@@ -95,10 +95,10 @@ export class TabSwitcher {
   }
 
   add() {
-    const dialogRef = this.dialog.open(EditTabDialog, {
+    const dialogReference = this.dialog.open(EditTabDialog, {
       data: { message: `Please enter new tab title`, tabsSignal: this.tabs },
     });
-    dialogRef.afterClosed().subscribe((title) => {
+    dialogReference.afterClosed().subscribe((title) => {
       if (title) {
         this.store.dispatch(DashboardActions.addTab({ title }));
       }
@@ -106,10 +106,10 @@ export class TabSwitcher {
   }
 
   edit(originalTitle: string) {
-    const dialogRef = this.dialog.open(EditTabDialog, {
+    const dialogReference = this.dialog.open(EditTabDialog, {
       data: { message: `Please enter new tab title`, tabsSignal: this.tabs, title: originalTitle },
     });
-    dialogRef.afterClosed().subscribe((newTitle) => {
+    dialogReference.afterClosed().subscribe((newTitle) => {
       if (newTitle) {
         this.store.dispatch(DashboardActions.editTab({ originalTitle, newTitle }));
       }
