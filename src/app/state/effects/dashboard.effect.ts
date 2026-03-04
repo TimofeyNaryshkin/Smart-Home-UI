@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, exhaustMap, first, map, of, skip, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, exhaustMap, first, map, mergeMap, of, skip, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../services/api-service';
 import { DashboardActions, DashboardApiActions } from '../actions/dashboard.actions';
 import { Router } from '@angular/router';
@@ -102,6 +102,18 @@ export class DashboardEffect {
         this.apiService.saveDashboard(dashboardId, data).pipe(
           map(() => DashboardApiActions.dashboardSavedSuccess({ tabs: data.tabs })),
           catchError((error: Error) => of(DashboardApiActions.dashboardSavedError({ error }))),
+        ),
+      ),
+    ),
+  );
+
+  toggleDevice$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DashboardActions.toggleDeviceState, ),
+      mergeMap(({ tabId, cardId, deviceId, newState }) =>
+        this.apiService.toggleDevice(deviceId, { state: newState }).pipe(
+          map((device) => DashboardApiActions.deviceToggledSuccess({ device })),
+          catchError(() => of(DashboardActions.revertDeviceState({ tabId, cardId, deviceId, newState: !newState }))),
         ),
       ),
     ),

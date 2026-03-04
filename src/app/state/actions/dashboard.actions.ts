@@ -21,6 +21,18 @@ export const DashboardActions = createActionGroup({
     'Reorder Card': props<{ tabId: string; cardId: string; newIndex: number }>(),
     'Remove Card': props<{ tabId: string; cardId: string }>(),
     'Edit Card': props<{ tabId: string; cardId: string; newCard: TCard }>(),
+    'Toggle Device State': props<{
+      tabId: string;
+      cardId: string;
+      deviceId: string;
+      newState: boolean;
+    }>(),
+    'Revert Device State': props<{
+      tabId: string;
+      cardId: string;
+      deviceId: string;
+      newState: boolean;
+    }>(),
   },
 });
 
@@ -35,5 +47,7 @@ export const DashboardApiActions = createActionGroup({
     'Dashboard Deleted Error': props<{ error: Error }>(),
     'Dashboard Saved Success': props<{ tabs: Tab[] }>(),
     'Dashboard Saved Error': props<{ error: Error }>(),
+    'Device Toggled Success': props<{ device: TDevice }>(),
+    'Device Toggled Error': props<{ error: Error }>(),
   },
 });

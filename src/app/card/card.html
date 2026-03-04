@@ -14,7 +14,7 @@
       @if (i.type === 'device') {
         <app-device
           [data]="i"
-          (dataChange)="updateDevice($index, $event)"
+          (dataChange)="updateDevice($event)"
           [isSingle]="data().layout === 'singleDevice'"
         />
       } @else {

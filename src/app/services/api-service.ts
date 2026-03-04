@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { TDashboard } from '../models/dashboard.model';
 import { Tab } from '../models/tab.model';
+import { TDevice } from '../models/device.models';
 
 @Injectable({
   providedIn: 'root',
@@ -38,5 +39,9 @@ export class ApiService {
 
   saveDashboard(dashboardId: string, data: { tabs: Tab[] }) {
     return this.http.put(`/dashboards/${dashboardId}`, data);
+  }
+
+  toggleDevice(deviceId: string, data: { state: boolean }): Observable<TDevice> {
+    return this.http.patch<TDevice>(`/devices/${deviceId}`, data);
   }
 }

@@ -64,13 +64,24 @@ export class Card {
     const updatedItems = this.data().items.map((item) => {
       return item.type === 'device' ? { ...item, state: newState } : item;
     });
-    this.data.update((card) => ({ ...card, items: updatedItems }));
+    updatedItems.forEach((item) => {
+      if (item.type !== 'device') return;
+      this.updateDevice(item);
+    });
   }
 
-  updateDevice(index: number, updatedDevice: TDevice) {
-    const updatedItems = [...this.data().items];
-    updatedItems[index] = updatedDevice;
-    this.data.update((card) => ({ ...card, items: updatedItems }));
+  updateDevice(updatedDevice: TDevice) {
+    const tabId = this.params()?.['tabId'];
+    if (!updatedDevice.id) return;
+
+    this.store.dispatch(
+      DashboardActions.toggleDeviceState({
+        tabId,
+        cardId: this.data().id,
+        deviceId: updatedDevice.id,
+        newState: updatedDevice.state,
+      }),
+    );
   }
 
   reorder(direction: 'left' | 'right') {

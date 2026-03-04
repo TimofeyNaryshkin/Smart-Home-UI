@@ -149,7 +149,7 @@ export const dashboardReducer = createReducer(
     const newTabs = [...state.tabs];
     const newCards = [...state.tabs[tabIndex].cards];
 
-    newCards[cardIndex] = newCard
+    newCards[cardIndex] = newCard;
     newTabs[tabIndex] = {
       ...newTabs[tabIndex],
       cards: newCards,
@@ -160,4 +160,36 @@ export const dashboardReducer = createReducer(
       tabs: newTabs,
     };
   }),
+  on(
+    DashboardActions.toggleDeviceState,
+    DashboardActions.revertDeviceState,
+    (state, { tabId, cardId, deviceId, newState }) => {
+      const tabIndex = state.tabs.findIndex((tab) => tab.id === tabId);
+      if (tabIndex === -1) return state;
+      const cardIndex = state.tabs[tabIndex].cards.findIndex((card) => card.id === cardId);
+      if (cardIndex === -1) return state;
+      const newTabs = [...state.tabs];
+      const newCards = [...state.tabs[tabIndex].cards];
+
+      newCards[cardIndex] = {
+        ...newCards[cardIndex],
+        items: newCards[cardIndex].items.map((item) => {
+          if (item.type === 'device' && item.id === deviceId) {
+            return { ...item, state: newState };
+          }
+          return item;
+        }),
+      };
+
+      newTabs[tabIndex] = {
+        ...newTabs[tabIndex],
+        cards: newCards,
+      };
+
+      return {
+        ...state,
+        tabs: newTabs,
+      };
+    },
+  ),
 );
